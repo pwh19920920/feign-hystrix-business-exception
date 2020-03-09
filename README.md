@@ -1,7 +1,7 @@
 # feign-hystrix-business-exception
 SpringCloud项目中，业务异常不被计入熔断度量、不被执行fallback流程处理实战
 
-##一、实战原理
+## 一、实战原理
 主要实现依赖hystrix对于HystrixBadRequestException异常的处理，以下是官方原文：
 
 ---
@@ -28,7 +28,7 @@ You can wrap the exception that you would like to throw in HystrixBadRequestExce
 > 4. THREAD_POOL_REJECTED：线程池拒绝。
 > 5. SEMAPHORE_REJECTED：信号量拒绝。
 
-##二、核心要点
+## 二、核心要点
 1. BaseException需要继承HystrixBadRequestException
 2. Feign的ErrorDecoder需要对业务异常的HttpStatus进行定义
 ```java
