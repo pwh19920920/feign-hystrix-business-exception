@@ -1,0 +1,34 @@
+ribbon:
+  ReadTimeout: 1000 # 请求处理的超时时间
+  ConnectTimeout: 1000 # 请求连接的超时时间
+  MaxAutoRetries: 0 #对当前实例的重试次数
+  MaxAutoRetriesNextServer: 1 # 切换实例的重试次数
+  OkToRetryOnAllOperations: false # 对所有操作请求都进行重试， 意思是只会对get方法进行重试
+  okhttp:
+    enabled: true
+
+feign-server:
+  ribbon:
+    listOfServers: "http://localhost:8001"
+
+server:
+  port: 9999
+
+feign:
+  hystrix:
+    enabled: true
+
+# hystrix 线程池隔离，8秒后自动超时
+# 具体配置看https://www.cnblogs.com/jing99/p/11625306.html
+hystrix:
+  command:
+    default:
+      circuitBreaker:
+        forceOpen: false # 强行打开
+        forceClose: false # 强行关闭
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            # 命令执行超时时间，默认1000ms，只在线程池隔离中有效。
+            timeoutInMilliseconds: 8000 # 配置方法是 >= 2 * (MaxAutoRetries + MaxAutoRetriesNextServer) * (ConnectTimeout + ReadTimeout)
